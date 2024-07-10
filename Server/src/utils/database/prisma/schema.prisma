@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id Int  @id @default(autoincrement())
+  user_name String
+  password String
+  email String @unique
+  gender String
+}
