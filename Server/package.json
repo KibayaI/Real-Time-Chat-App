@@ -1,20 +1,22 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "R.T Chat",
-  "main": "server.mjs",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.mjs"
   },
   "author": "Kibaya",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2"
-  },
-  "devDependencies": {
     "@prisma/client": "^5.16.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
     "nodemon": "^3.1.4",
-    "prisma": "^5.16.1"
+    "prisma": "^5.16.1",
+    "socket.io": "^4.7.5"
   }
 }
