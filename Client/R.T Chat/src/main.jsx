@@ -12,11 +12,7 @@ import ErrorElement from "./ErrorElement.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route
-      path="/"
-      element={<App />}
-      errorElement={<ErrorElement />}
-    ></Route>
+    <Route path="/" element={<App />} errorElement={<ErrorElement />}></Route>
   )
 );
 
