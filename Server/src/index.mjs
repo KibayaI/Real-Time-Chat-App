@@ -4,6 +4,7 @@ import cors from "cors";
 import { Server } from "socket.io";
 
 import "dotenv/config";
+import { router } from "./router/route.mjs";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -16,10 +17,12 @@ const io = new Server(server, {
 });
 
 app.use(cors());
+app.use(express.json());
+app.use(router);
 
 io.on("connection", (socket) => {
   console.log(`👍 ${socket.id} just connected!!`);
-  
+
   socket.on("message", (message) => {
     io.emit("messageResponse", message);
   });

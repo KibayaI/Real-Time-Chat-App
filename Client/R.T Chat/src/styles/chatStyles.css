@@ -1,6 +1,9 @@
+.chat-page{
+  padding: 1rem .5rem;
+}
+
 .message-list {
     background-color: rgba(240, 255, 255, 0.171);
-    /* width: 90%; */
     max-height: 80vh;
     border-radius: 20px;
     padding: 1rem;
@@ -12,7 +15,7 @@
     scrollbar-width: thin;
 }
 
-.form{
+.chat-page form{
     position: absolute;
     padding-left: .2rem;
     bottom: 1rem;
@@ -21,29 +24,23 @@
     gap: 1rem;
 }
 
-input{
+.chat-page input{
     width: 75%;
     padding: .5rem 1rem;
     border-radius: 10px;
     border: none;
 }
 
-input:focus, input:hover{
-    outline: 2px solid cyan;
+.chat-page input:focus, input:hover{
+    outline: 1px solid cyan;
 }
 
-button{
+.chat-page button{
     border-radius: 5px;
     border: none;
     padding: .5rem 1rem;
     color: cyan;
     background-color: black;
-}
-
-button:hover{
-    background-color: cyan;
-    color: black;
-    cursor: pointer;
 }
 
 .message{
@@ -60,13 +57,12 @@ li{
     padding: .5rem;
     border-radius: 5px;
     border: 1px solid grey;
-    /* margin: .5rem 0; */
     width: fit-content;
-    max-width: 50%;
+    max-width: 80%;
 }
 
 p{
-    max-width: 50%;
+    max-width: 80%;
     width: fit-content;
     font-size: 10px;
 }

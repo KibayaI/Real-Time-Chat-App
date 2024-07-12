@@ -1,0 +1,63 @@
+.entry {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.entry form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1rem;
+  border-radius: 20px;
+  height: 60vh;
+  box-shadow: 2px 3px 7px 0 cyan;
+}
+/* /////////////////////////// */
+.center {
+  align-self: center;
+}
+
+.form-fields {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.entry label {
+  margin-right: 0.5rem;
+}
+
+.entry input {
+  border: none;
+  border-bottom: 1px solid cyan;
+  background-color: transparent;
+}
+
+.entry button {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  width: fit-content;
+  align-self: center;
+}
+
+/* Utilities */
+
+input:focus,
+input:hover {
+  outline: none;
+}
+
+.account{
+  font-size: .7rem;
+  font-style: italic;
+  align-self: center;
+}
+
+.coffee{
+  margin-left: -40px;
+}
