@@ -1,4 +1,72 @@
 .message-list {
     background-color: rgba(240, 255, 255, 0.171);
+    /* width: 90%; */
+    max-height: 80vh;
+    border-radius: 20px;
+    padding: 1rem;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.message-list:hover{
+    scrollbar-width: thin;
+}
+
+.form{
+    position: absolute;
+    padding-left: .2rem;
+    bottom: 1rem;
+    display: flex;
+    width: 95%;
+    gap: 1rem;
+}
+
+input{
+    width: 75%;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    border: none;
+}
+
+input:focus, input:hover{
+    outline: 2px solid cyan;
+}
+
+button{
+    border-radius: 5px;
+    border: none;
+    padding: .5rem 1rem;
     color: cyan;
+    background-color: black;
+}
+
+button:hover{
+    background-color: cyan;
+    color: black;
+    cursor: pointer;
+}
+
+.message{
+    margin-top: .5rem;
+}
+
+.userStyle {
+    background-color: inherit !important;
+}
+
+/* Utilities */
+li{
+    list-style: none;
+    padding: .5rem;
+    border-radius: 5px;
+    border: 1px solid grey;
+    /* margin: .5rem 0; */
+    width: fit-content;
+    max-width: 50%;
+}
+
+p{
+    max-width: 50%;
+    width: fit-content;
+    font-size: 10px;
 }
