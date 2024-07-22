@@ -1,83 +1,111 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/chatStyles.css";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ChatComponent({ socket }) {
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  const [userName, setUserName] = useState("anonymous");
+  const navigate = useNavigate();
+  const receiver = useSelector((state) => state.receiver.receiverData);
+
+  console.log({ receiver: receiver });
 
   function onSubmit(e) {
     e.preventDefault();
-    socket.emit("message", {
+    const sentMessage = {
       text: message,
-      id: socket.id,
-      userName: userName,
-      timeStamp: new Date(),
-    });
+      to: receiver.userId,
+    };
+    socket.emit("private_message", sentMessage);
+
+    setMessageList([...messageList, sentMessage]);
+
     setMessage("");
+
+    // if (message !== "") {
+    //   socket.to(room).emit("message", {
+    //     text: message,
+    //     from: socket.id,
+    //     // to: selectedUser.id,
+    //     timeStamp: new Date(),
+    //   });
+    // }
   }
 
   useEffect(() => {
-    socket.on("messageResponse", (message) => {
-      setMessageList([...messageList, message]);
-      
-      // localStorage.setItem("messages", JSON.stringify(messageList));
-      // console.log(JSON.parse(localStorage.getItem("messages")));
+    socket.on("private_message", (response) => {
+      console.log(response);
+      setMessageList([...messageList, response]);
     });
-  }, [messageList]);
+    // socket.on("messageResponse", (message) => {
+    //   setMessageList([...messageList, message]);
+    // });
+  });
 
-  function handleUserName(e) {
-    setUserName(e.target.value);
-  }
+  const [upload, setUpload] = useState("upload-hide");
 
   return (
-      <div className="chat-page">
-        <input type="text" onChange={handleUserName} />
+    <div className="chat-page">
+      <div className="header">
+        <button onClick={() => navigate(-1)}>
+          <i className="fa fa-chevron-left"></i>
+        </button>
+        <h2>{receiver.userName}</h2>
+      </div>
+      <div key="index" className="message-list">
+        {messageList.map((messageitem) => {
+          const textStyle =
+            socket.userName === messageitem.from ? "sender" : "receiver";
 
-        {/* <h1>3 8 1 20 _ 1 19 19: {userName}</h1> */}
-        <div className="message-list">
-          {messageList.map((messageitem, index) => {
-            const textStyle =
-              socket.id === messageitem.id
-                ? {
-                    marginLeft: "auto",
-                    marginRight: "0px",
-                    backgroundColor: "rgba(0, 174, 255, 0.979)",
-                  }
-                : {
-                    marginRight: "auto",
-                    marginLeft: "0px",
-                    backgroundColor: "rgba(169, 169, 169, 0.377)",
-                  };
+          return (
+            <div key={messageitem.timeStamp} className="message">
+              <li className={textStyle}>{messageitem.text}</li>
+              {/* {socket.userId !== messageitem.userId ? (
+                <p>{messageitem.timeStamp}</p>
+              ) : (
+                ""
+              )} */}
+            </div>
+          );
+        })}
+      </div>
 
-            return (
-              <div className="message">
-                <li style={textStyle} key={index}>
-                  {messageitem.text}
-                </li>
-                {socket.id !== messageitem.id ? (
-                  <p style={textStyle} className="userStyle">
-                    {messageitem.userName} {messageitem.timeStamp}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <form onSubmit={onSubmit}>
-          <input
-            onChange={(e) => setMessage(e.target.value)}
-            type="text"
-            name="chat"
-            id="chat"
-            value={message}
-          />
-          <button type="submit">Send </button>
+      <div className={upload}>
+        <form
+          className={upload}
+          preventDefault
+          action="http://localhost:3000/upload"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="file" name="file" required />
+          <button type="button">
+            <i className="fa fa-upload"></i>
+          </button>
         </form>
       </div>
+
+      <div>
+      <form className="text-form" onSubmit={onSubmit}>
+        <input
+          onChange={(e) => setMessage(e.target.value)}
+          type="text"
+          name="chat"
+          id="chat"
+          value={message}
+        />
+
+        <button onClick={() => setUpload("upload-show")}>
+          <i className="fa fa-paperclip"></i>
+        </button>
+        <button type="submit">
+          <i className="fa fa-paper-plane"></i>
+          {""}
+        </button>
+      </form>
+      </div>
+    </div>
   );
 }
 

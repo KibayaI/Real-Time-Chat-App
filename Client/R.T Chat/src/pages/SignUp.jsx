@@ -2,41 +2,42 @@ import React, { useState } from "react";
 import "../styles/globalStyles.css";
 import { Link, useNavigate } from "react-router-dom";
 
-
 function SignUp() {
   const [regDetails, setRegDetails] = useState({
-    name: "",
+    username: "",
     email: "",
     gender: "",
     password: "",
   });
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   function onFIeldChange(e) {
-    if (e.target.name === "textInput") {
+    if (e.target.name === "usernameField") {
       setRegDetails({
-        name: e.target.value,
+        username: e.target.value,
         email: regDetails.email,
         gender: regDetails.gender,
         password: regDetails.password,
       });
     } else if (e.target.name === "emailField") {
       setRegDetails({
-        name: regDetails.name,
+        username: regDetails.username,
         email: e.target.value,
         gender: regDetails.gender,
         password: regDetails.password,
       });
+      setError("");
     } else if (e.target.name === "genderField") {
       setRegDetails({
-        name: regDetails.name,
+        username: regDetails.username,
         email: regDetails.email,
         gender: e.target.value,
         password: regDetails.password,
       });
-    } else {
+    } else if (e.target.name === "passwordField") {
       setRegDetails({
-        name: regDetails.name,
+        username: regDetails.username,
         email: regDetails.email,
         gender: regDetails.gender,
         password: e.target.value,
@@ -46,35 +47,44 @@ function SignUp() {
 
   async function register(e) {
     e.preventDefault();
+
     try {
-      await fetch("http://localhost:3000/user", {
+      const user = await fetch("http://localhost:4000/user", {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify(regDetails),
-      });
-      console.log("post success!!");
-      navigate("/chat")
+      }).then((user) => user.json());
+
+      if (!user.error) {
+        console.log("post success!!");
+        console.log(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        navigate("/testChat");
+        console.log(localStorage.getItem("user"));
+      } else {
+        setError("Email Address already in use!!!");
+        console.log(user);
+      }
     } catch (err) {
       console.log(err);
     }
-    console.log(regDetails);
   }
 
   return (
     <div className="entry">
       <form onSubmit={register}>
         <div className="form-fields">
-          <label htmlFor="textInput">name</label>
+          <label htmlFor="textInput">UserName</label>
           <input
-            id="textInput"
-            name="textInput"
+            id="username"
+            name="usernameField"
             type="text"
             required
-            placeholder="name"
-            value={regDetails.name}
+            placeholder="Name"
+            defaultValue={regDetails.username}
             onChange={onFIeldChange}
           />
         </div>
@@ -91,6 +101,7 @@ function SignUp() {
             onChange={onFIeldChange}
           />
         </div>
+        <label className="error slant">{error}</label>
 
         <div className="form-fields">
           <label htmlFor="genderField">Gender</label>
@@ -120,7 +131,7 @@ function SignUp() {
         <button>Sign Up</button>
         <br />
 
-        <label className="account">
+        <label className="slant">
           Already have an account?&nbsp;
           <Link to="/">Log In</Link>
         </label>

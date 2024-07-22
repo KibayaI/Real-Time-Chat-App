@@ -1,10 +1,18 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import "./styles/globalStyles.css"
 
-function ErrorElement() {
+function ErrorElement({ ErrorMessage }) {
   return (
-    <>
-     <h1>This is a very fine error page..!!</h1> 
-    </>
-  )
+    <div className="entry">
+      <div>
+        <h2 className="error">{ErrorMessage}</h2>
+
+        <div style={{textAlign: "center"}}>
+          <Link to="/">Login</Link>
+        </div>
+      </div>
+    </div>
+  );
 }
-export default ErrorElement
+export default ErrorElement;

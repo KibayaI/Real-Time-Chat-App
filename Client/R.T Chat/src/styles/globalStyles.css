@@ -12,6 +12,7 @@
   padding: 0 1rem;
   border-radius: 20px;
   height: 60vh;
+  max-height: 500px;
   box-shadow: 2px 3px 7px 0 cyan;
 }
 /* /////////////////////////// */
@@ -21,10 +22,13 @@
 
 .form-fields {
   display: flex;
-  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.entry form div:first-child input{
+  margin-left: 3rem;
 }
 
 .entry label {
@@ -52,12 +56,22 @@ input:hover {
   outline: none;
 }
 
-.account{
-  font-size: .7rem;
+.slant {
+  font-size: 0.7rem;
   font-style: italic;
   align-self: center;
 }
 
-.coffee{
+.hide-show {
   margin-left: -40px;
+}
+
+.error {
+  color: red;
+  align-self: flex-end;
+  margin: -15px 0 10px;  
+}
+
+.dashboard{
+  background-color: #333;
 }
