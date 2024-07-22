@@ -7,10 +7,84 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id Int  @id @default(autoincrement())
-  user_name String
-  password String
-  email String @unique
-  gender String
+// model users {
+//   id String  @id @default(uuid())
+//   name String
+//   password String
+//   email String @unique
+//   gender String
+// }
+
+
+
+// model User {
+//   id                String    @id @default(uuid()) @db.UniqueIdentifier
+//   username          String    @unique @db.VarChar(20)
+//   email             String    @unique @db.VarChar(50)
+//   password          String    @db.VarChar(255)
+//   isAvatarImageSet  Boolean   @default(false)
+//   avatarImage       String    @default("") @db.VarChar(255)
+//   sentMessages      Message[] @relation("SentMessages")
+//   userMessages      UserMessage[]
+// }
+
+// model Message {
+//   id        String         @id @default(uuid()) @db.UniqueIdentifier
+//   text      String         @db.VarChar(255)
+//   senderId  String         @db.UniqueIdentifier
+//   sender    User           @relation("SentMessages", fields: [senderId], references: [id])
+//   userMessages UserMessage[]
+//   createdAt DateTime       @default(now()) @db.DateTime
+//   updatedAt DateTime       @updatedAt @db.DateTime
+// }
+
+// model UserMessage {
+//   userId    String   @db.UniqueIdentifier
+//   messageId String   @db.UniqueIdentifier
+//   user      User     @relation(fields: [userId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+//   message   Message  @relation(fields: [messageId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+//   @@id([userId, messageId])
+//   }
+
+///take twoo....................
+model Messages {
+  id        String   @id @default(uuid())
+  text      String
+  from      String
+  to        String
+  senderId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sender    Users    @relation(fields: [senderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  messageUsers MessageUsers[]
+
+  @@map("messages")
+}
+
+model MessageUsers {
+  messageId String
+  userId    String
+
+  message   Messages @relation(fields: [messageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([messageId, userId])
+  @@map("message_users")
+}
+
+
+  model Users {
+  id                String   @id @default(uuid())
+  username          String   @unique @db.VarChar(20)
+  email             String   @unique @db.VarChar(50)
+  password          String   @db.VarChar(255)
+  gender            String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  messages          Messages[]
+  messageUsers      MessageUsers[]
+
+  @@map("users")
 }

@@ -7,5 +7,12 @@
 #root{
   width: 100vw;
   height: 100vh;
-  padding: 1rem .5rem;
+  overflow-x: hidden;
+
+}
+
+button:hover{
+    background-color: cyan;
+    color: black;
+    cursor: pointer;
 }
